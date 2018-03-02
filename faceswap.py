@@ -1,4 +1,5 @@
 """
+This program requires conda installed
 To install the dependiencies
     run `conda env create -f faceswap.yml`
 
