@@ -1,7 +1,7 @@
 import sys
 import random
 from flask import (Flask, request, Response)
-# install using
+# install using conda install -c conda-forge jsonpickle
 import jsonpickle
 from flask import send_file
 from faceswap import faceswap
