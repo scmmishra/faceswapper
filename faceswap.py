@@ -13,6 +13,7 @@ import cv2
 import dlib
 import numpy
 import sys
+import base64
 
 PREDICTOR_PATH = "shape_predictor_68_face_landmarks.dat"
 SCALE_FACTOR = 1
@@ -180,4 +181,6 @@ def faceswap(input_image, base, name_employee):
     output_im = im1 * (CONSTANT_FOR_MASK - combined_mask) + warped_corrected_im2 * combined_mask
     file_name = name_employee + '.jpg'
     cv2.imwrite(file_name, output_im)
-    return(file_name)
+    with open(file_name, 'wb') as handler:
+        encoded_string = base64.b64encode(handler.read())
+    return(encoded_string)
