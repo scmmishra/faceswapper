@@ -1,10 +1,12 @@
 import sys
 import random
-from flask import (Flask, request, Response)
+import requests
+from flask import (Flask, request, Response, url_for)
 # install using conda install -c conda-forge jsonpickle
 import jsonpickle
 from flask import send_file
 from faceswap import faceswap
+import time
 
 # faceswap(sys.argv[1], sys.argv[2])
 app = Flask(__name__)
@@ -19,9 +21,9 @@ def my_webservice():
     with open(temp_name, 'wb') as handler:
         handler.write(img_data)
     # Uses faceswap to change image
-    name_of_output = faceswap(temp_name, "head.jpg", name)
+    name_of_output = faceswap("head.jpg", temp_name, name)
 
-    response = {'image': '{}'.format(url_for(filename=name_of_output))}
+    response = {'image': '{}'.format(url_for('static' ,filename=name_of_output))}
     response_pickled = jsonpickle.encode(response)
     return Response(response=response_pickled, status=200, mimetype="application/json")
 
