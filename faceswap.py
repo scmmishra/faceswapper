@@ -12,7 +12,6 @@ from `<head image>` replaced with the facial features from `<face image>`.
 import cv2
 import dlib
 import numpy
-import
 import sys
 
 PREDICTOR_PATH = "shape_predictor_68_face_landmarks.dat"

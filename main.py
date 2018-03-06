@@ -13,7 +13,7 @@ def my_webservice():
     name_of_output = faceswap(file, "head.jpg", name)
 
     # Send this `url_for('static', filename=name_of_output)` in an HTTPS respose or any other form
-    return url_for('static', filename=name_of_output)
+    return url_for(filename=name_of_output)
 
 
 app.run(host="0.0.0.0", port=5000)
