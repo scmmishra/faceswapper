@@ -1,5 +1,8 @@
 import sys
-from flask import Flask
+import random
+from flask import (Flask, request, Response)
+# install using
+import jsonpickle
 from flask import send_file
 from faceswap import faceswap
 
@@ -8,13 +11,19 @@ app = Flask(__name__)
 
 @app.route("/swap", methods=['POST'])
 def my_webservice():
-    name = request.form['employee_name']
-    file = request.files['image']
+    data = request.get_json()
+    name = data['employee_name']
+    image_url = data['image']
+    img_data = requests.get(image_url).content
+    temp_name = str(time.time())[4:10] + '.jpg'
+    with open(temp_name, 'wb') as handler:
+        handler.write(img_data)
     # Uses faceswap to change image
-    name_of_output = faceswap(file, "head.jpg", name)
+    name_of_output = faceswap(temp_name, "head.jpg", name)
 
-    # Send this `url_for('static', filename=name_of_output)` in an HTTPS respose or any other form
-    return url_for(filename=name_of_output)
+    response = {'image': '{}'.format(url_for(filename=name_of_output))}
+    response_pickled = jsonpickle.encode(response)
+    return Response(response=response_pickled, status=200, mimetype="application/json")
 
 def main():
     app.run(host="0.0.0.0", port=5000)
