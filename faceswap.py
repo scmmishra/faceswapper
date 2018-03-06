@@ -12,7 +12,7 @@ from `<head image>` replaced with the facial features from `<face image>`.
 import cv2
 import dlib
 import numpy
-
+import
 import sys
 
 PREDICTOR_PATH = "shape_predictor_68_face_landmarks.dat"
@@ -41,7 +41,8 @@ OVERLAY_POINTS = [
 
 # Amount of blur to use during colour correction, as a fraction of the
 # pupillary distance.
-COLOUR_CORRECT_BLUR_FRAC = 0.6
+COLOUR_CORRECT_BLUR_FRAC = 0.5
+CONSTANT_FOR_MASK = 1.0
 
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor(PREDICTOR_PATH)
@@ -162,20 +163,22 @@ def correct_colours(im1, im2, landmarks1):
     return (im2.astype(numpy.float64) * im1_blur.astype(numpy.float64) /
                                                 im2_blur.astype(numpy.float64))
 
-im1, landmarks1 = read_im_and_landmarks(sys.argv[1])
-im2, landmarks2 = read_im_and_landmarks(sys.argv[2])
+def faceswap(input_image, base, name_employee):
+    im1, landmarks1 = read_im_and_landmarks(input_image)
+    im2, landmarks2 = read_im_and_landmarks(base)
 
-M = transformation_from_points(landmarks1[ALIGN_POINTS],
-                               landmarks2[ALIGN_POINTS])
+    M = transformation_from_points(landmarks1[ALIGN_POINTS],
+                                landmarks2[ALIGN_POINTS])
 
-mask = get_face_mask(im2, landmarks2)
-warped_mask = warp_im(mask, M, im1.shape)
-combined_mask = numpy.max([get_face_mask(im1, landmarks1), warped_mask],
-                          axis=0)
+    mask = get_face_mask(im2, landmarks2)
+    warped_mask = warp_im(mask, M, im1.shape)
+    combined_mask = numpy.max([get_face_mask(im1, landmarks1), warped_mask],
+                            axis=0)
 
-warped_im2 = warp_im(im2, M, im1.shape)
-warped_corrected_im2 = correct_colours(im1, warped_im2, landmarks1)
+    warped_im2 = warp_im(im2, M, im1.shape)
+    warped_corrected_im2 = correct_colours(im1, warped_im2, landmarks1)
 
-output_im = im1 * (1.0 - combined_mask) + warped_corrected_im2 * combined_mask
-
-cv2.imwrite('output.jpg', output_im)
+    output_im = im1 * (CONSTANT_FOR_MASK - combined_mask) + warped_corrected_im2 * combined_mask
+    file_name = name_employee + '.jpg'
+    cv2.imwrite(file_name, output_im)
+    return(file_name)
