@@ -7,7 +7,9 @@ dependencies:
 - ca-certificates=2017.08.26=ha1e5d58_0
 - cairo=1.14.12=hab642c4_0
 - certifi=2018.1.18=py27_0
+- click=6.7=py27h2b86a94_0
 - ffmpeg=3.4=h766ddd1_0
+- flask=0.12.2=py27h3ac5568_0
 - fontconfig=2.12.4=hffb9db1_2
 - freetype=2.8=h12048fb_1
 - gettext=0.19.8.1=h15daf44_3
@@ -17,7 +19,9 @@ dependencies:
 - hdf5=1.10.1=ha036c08_1
 - icu=58.2=h4b95b61_1
 - intel-openmp=2018.0.0=h8158457_8
+- itsdangerous=0.24=py27h3948ded_1
 - jasper=1.900.1=h1f36771_4
+- jinja2=2.10=py27h70b8dc5_0
 - jpeg=9b=he5867d9_2
 - libcxx=4.0.1=h579ed51_0
 - libcxxabi=4.0.1=hebd6815_0
@@ -31,6 +35,7 @@ dependencies:
 - libtiff=4.0.9=h0dac147_0
 - libvpx=1.6.1=h057a404_0
 - libxml2=2.9.7=hab757c2_0
+- markupsafe=1.0=py27hd3c86fa_1
 - mkl=2018.0.1=hfbd8650_4
 - ncurses=6.0=hd04f020_2
 - numpy=1.14.1=py27h8a80b8c_1
@@ -43,6 +48,7 @@ dependencies:
 - setuptools=38.5.1=py27_0
 - sqlite=3.13.0=0
 - tk=8.6.7=h35a86e2_3
+- werkzeug=0.14.1=py27_0
 - wheel=0.30.0=py27h677a027_1
 - xz=5.2.3=h0278029_2
 - zlib=1.2.11=hf3cbc9b_2
