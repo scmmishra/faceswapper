@@ -9,7 +9,7 @@ from faceswap import faceswap
 def my_webservice():
     name = request.form['employee_name']
     file = request.files['image']
-    #
+    # Uses faceswap
     name_of_output = faceswap(file, "head.jpg", name)
     return url_for('static', filename=name_of_output)
 
